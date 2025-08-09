@@ -6,12 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root{
-      --bg-start:#0b102a;   /* deep navy */
-      --bg-end:#2b2f86;     /* indigo */
-      --text:#e8ecff;       /* soft off-white */
+      --bg-start:#0b102a;         /* deep navy */
+      --bg-end:#2b2f86;           /* indigo */
+      --text:#e8ecff;             /* off-white */
       --muted:#b7c0ff;
-      --card:#12183f;
       --card-border:rgba(255,255,255,.08);
+      --glass-top:rgba(255,255,255,.06);
+      --glass-bot:rgba(255,255,255,.03);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -20,70 +21,182 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
       color:var(--text);
-      background: radial-gradient(1200px 800px at 20% 10%, #1a1f55 0%, rgba(26,31,85,0) 60%) ,
-                  linear-gradient(135deg, var(--bg-start), var(--bg-end));
       text-align:center;
       padding:24px;
+      background:
+        radial-gradient(1200px 800px at 18% 10%, rgba(50,60,140,.35) 0%, rgba(50,60,140,0) 60%),
+        linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      overflow:hidden;
+      /* slow ambient gradient drift */
+      animation:bgShift 18s ease-in-out infinite alternate;
     }
+    /* soft, moving light blobs behind the card */
+    body::before, body::after{
+      content:"";
+      position:fixed; inset:auto;
+      width:52vmax; height:52vmax;
+      border-radius:50%;
+      filter: blur(70px);
+      opacity:.18;
+      pointer-events:none;
+      transform:translate(-20%, -30%);
+      background:radial-gradient(circle at 30% 30%, #6a75ff 0%, rgba(106,117,255,0) 60%);
+      animation:blob 26s ease-in-out infinite;
+    }
+    body::after{
+      right:-15%; bottom:-10%;
+      left:auto; top:auto;
+      transform:translate(15%, 15%);
+      background:radial-gradient(circle at 70% 70%, #5ed4ff 0%, rgba(94,212,255,0) 60%);
+      animation:blob2 32s ease-in-out infinite;
+    }
+
     .card{
-      width:min(680px, 100%);
-      padding:40px 28px 28px;
+      width:min(720px, 100%);
+      padding:42px 30px 30px;
       border:1px solid var(--card-border);
-      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border-radius:18px;
-      box-shadow:0 10px 40px rgba(0,0,0,.35);
+      background:linear-gradient(180deg, var(--glass-top), var(--glass-bot));
+      border-radius:20px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.06);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      /* entrance animation */
+      transform: translateY(14px) scale(.98);
+      opacity:0;
+      animation:cardIn .9s cubic-bezier(.2,.7,.2,1) .15s forwards;
     }
+
+    .logo-wrap{
+      display:inline-block;
+      position:relative;
+      margin:0 auto 22px;
+      border-radius:16px;
+      padding:10px;
+      background:linear-gradient(145deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
+      border:1px solid var(--card-border);
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+      /* gentle float */
+      animation:float 6s ease-in-out infinite;
+    }
+    /* subtle sheen pass */
+    .logo-wrap::after{
+      content:"";
+      position:absolute; inset:0;
+      border-radius:16px;
+      background:linear-gradient(120deg, transparent 40%, rgba(255,255,255,.18) 50%, transparent 60%);
+      transform:translateX(-120%);
+      animation:sheen 5.5s ease-in-out infinite 1.2s;
+      pointer-events:none;
+    }
+
     .logo{
       width:min(280px, 70vw);
       height:auto;
-      border-radius:14px;
       display:block;
-      margin:0 auto 20px;
-      box-shadow:0 6px 28px rgba(0,0,0,.45);
+      border-radius:12px;
     }
+
     h1{
-      margin:6px 0 10px;
-      font-size: clamp(28px, 5vw, 40px);
-      letter-spacing:.3px;
+      margin:8px 0 12px;
+      font-size: clamp(30px, 5.5vw, 44px);
+      letter-spacing:.2px;
+      line-height:1.15;
+      /* slide in */
+      transform: translateY(8px);
+      opacity:0;
+      animation:fadeUp .8s ease .35s forwards;
     }
+
     p{
-      margin:0 auto;
-      max-width:52ch;
+      margin:0 auto 14px;
+      max-width:56ch;
       color:var(--muted);
       font-size:clamp(16px, 2.5vw, 18px);
-      line-height:1.55;
+      line-height:1.6;
+      opacity:0;
+      animation:fadeUp .8s ease .48s forwards;
     }
+
     .pill{
       display:inline-block;
-      margin:14px auto 0;
-      padding:8px 14px;
+      margin:6px auto 0;
+      padding:9px 16px;
       border-radius:999px;
       background:rgba(255,255,255,.08);
       border:1px solid var(--card-border);
       font-size:14px;
       color:#dfe4ff;
+      letter-spacing:.2px;
+      box-shadow:0 4px 14px rgba(0,0,0,.25);
+      opacity:0;
+      animation:fadeUp .8s ease .62s forwards, pulse 3.2s ease-in-out infinite 1.3s;
     }
+
     footer{
-      margin-top:26px;
+      margin-top:28px;
       font-size:12px;
       letter-spacing:.6px;
       text-transform:uppercase;
-      opacity:.7;
+      opacity:.75;
+      /* subtle fade in */
+      animation:fadeUp .8s ease .75s forwards;
+    }
+
+    /* ===== Animations ===== */
+    @keyframes cardIn{
+      to{ opacity:1; transform: translateY(0) scale(1); }
+    }
+    @keyframes float{
+      0%,100%{ transform:translateY(0) }
+      50%{ transform:translateY(-8px) }
+    }
+    @keyframes sheen{
+      0%{ transform:translateX(-120%) rotate(0.001deg) }
+      100%{ transform:translateX(120%) rotate(0.001deg) }
+    }
+    @keyframes fadeUp{
+      from{ opacity:0; transform:translateY(10px) }
+      to{ opacity:1; transform:translateY(0) }
+    }
+    @keyframes pulse{
+      0%,100%{ box-shadow:0 4px 14px rgba(0,0,0,.25) }
+      50%{ box-shadow:0 6px 22px rgba(0,0,0,.35) }
+    }
+    @keyframes bgShift{
+      0%{ background-position: 0% 0%, 0% 0% }
+      100%{ background-position: 5% 3%, 100% 100% }
+    }
+    @keyframes blob{
+      0%{ transform:translate(-20%, -30%) scale(1) }
+      100%{ transform:translate(-10%, -35%) scale(1.05) }
+    }
+    @keyframes blob2{
+      0%{ transform:translate(15%, 15%) scale(1) }
+      100%{ transform:translate(10%, 18%) scale(1.06) }
+    }
+
+    /* Respect users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation:none !important; transition:none !important }
     }
   </style>
 </head>
 <body>
   <main class="card" role="main" aria-label="Talia website status">
-    <!-- Replace the src if you keep a different filename/path -->
-    <img class="logo" src="talia-logo.png" alt="Talia logo" />
+    <div class="logo-wrap">
+      <!-- Keep the file as talia-logo.png or adjust the src -->
+      <img class="logo" src="talia-logo.png" alt="Talia logo">
+    </div>
 
     <h1>We’re building something caring and clever.</h1>
     <p>Our new Talia website is currently being built. Check back soon for a smoother, smarter way to connect with care.</p>
-    <div class="pill">Coming soon</div>
+    <div class="pill" aria-live="polite">Coming soon</div>
 
-    <footer>powered by zaeem</footer>
+    <footer>powered by talia</footer>
   </main>
 </body>
 </html>
