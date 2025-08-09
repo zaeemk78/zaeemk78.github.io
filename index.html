@@ -2,201 +2,136 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Talia — Coming Soon</title>
+  <title>TALIA — AI Telehealth</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root{
-      --bg-start:#0b102a;         /* deep navy */
-      --bg-end:#2b2f86;           /* indigo */
-      --text:#e8ecff;             /* off-white */
-      --muted:#b7c0ff;
-      --card-border:rgba(255,255,255,.08);
-      --glass-top:rgba(255,255,255,.06);
-      --glass-bot:rgba(255,255,255,.03);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans";
-      color:var(--text);
-      text-align:center;
-      padding:24px;
-      background:
-        radial-gradient(1200px 800px at 18% 10%, rgba(50,60,140,.35) 0%, rgba(50,60,140,0) 60%),
-        linear-gradient(135deg, var(--bg-start), var(--bg-end));
-      overflow:hidden;
-      /* slow ambient gradient drift */
-      animation:bgShift 18s ease-in-out infinite alternate;
-    }
-    /* soft, moving light blobs behind the card */
-    body::before, body::after{
-      content:"";
-      position:fixed; inset:auto;
-      width:52vmax; height:52vmax;
-      border-radius:50%;
-      filter: blur(70px);
-      opacity:.18;
-      pointer-events:none;
-      transform:translate(-20%, -30%);
-      background:radial-gradient(circle at 30% 30%, #6a75ff 0%, rgba(106,117,255,0) 60%);
-      animation:blob 26s ease-in-out infinite;
-    }
-    body::after{
-      right:-15%; bottom:-10%;
-      left:auto; top:auto;
-      transform:translate(15%, 15%);
-      background:radial-gradient(circle at 70% 70%, #5ed4ff 0%, rgba(94,212,255,0) 60%);
-      animation:blob2 32s ease-in-out infinite;
-    }
-
-    .card{
-      width:min(720px, 100%);
-      padding:42px 30px 30px;
-      border:1px solid var(--card-border);
-      background:linear-gradient(180deg, var(--glass-top), var(--glass-bot));
-      border-radius:20px;
-      box-shadow:
-        0 20px 60px rgba(0,0,0,.45),
-        inset 0 1px 0 rgba(255,255,255,.06);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      /* entrance animation */
-      transform: translateY(14px) scale(.98);
-      opacity:0;
-      animation:cardIn .9s cubic-bezier(.2,.7,.2,1) .15s forwards;
-    }
-
-    .logo-wrap{
-      display:inline-block;
-      position:relative;
-      margin:0 auto 22px;
-      border-radius:16px;
-      padding:10px;
-      background:linear-gradient(145deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
-      border:1px solid var(--card-border);
-      box-shadow:0 10px 30px rgba(0,0,0,.35);
-      /* gentle float */
-      animation:float 6s ease-in-out infinite;
-    }
-    /* subtle sheen pass */
-    .logo-wrap::after{
-      content:"";
-      position:absolute; inset:0;
-      border-radius:16px;
-      background:linear-gradient(120deg, transparent 40%, rgba(255,255,255,.18) 50%, transparent 60%);
-      transform:translateX(-120%);
-      animation:sheen 5.5s ease-in-out infinite 1.2s;
-      pointer-events:none;
-    }
-
-    .logo{
-      width:min(280px, 70vw);
-      height:auto;
-      display:block;
-      border-radius:12px;
-    }
-
-    h1{
-      margin:8px 0 12px;
-      font-size: clamp(30px, 5.5vw, 44px);
-      letter-spacing:.2px;
-      line-height:1.15;
-      /* slide in */
-      transform: translateY(8px);
-      opacity:0;
-      animation:fadeUp .8s ease .35s forwards;
-    }
-
-    p{
-      margin:0 auto 14px;
-      max-width:56ch;
-      color:var(--muted);
-      font-size:clamp(16px, 2.5vw, 18px);
-      line-height:1.6;
-      opacity:0;
-      animation:fadeUp .8s ease .48s forwards;
-    }
-
-    .pill{
-      display:inline-block;
-      margin:6px auto 0;
-      padding:9px 16px;
-      border-radius:999px;
-      background:rgba(255,255,255,.08);
-      border:1px solid var(--card-border);
-      font-size:14px;
-      color:#dfe4ff;
-      letter-spacing:.2px;
-      box-shadow:0 4px 14px rgba(0,0,0,.25);
-      opacity:0;
-      animation:fadeUp .8s ease .62s forwards, pulse 3.2s ease-in-out infinite 1.3s;
-    }
-
-    footer{
-      margin-top:28px;
-      font-size:12px;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-      opacity:.75;
-      /* subtle fade in */
-      animation:fadeUp .8s ease .75s forwards;
-    }
-
-    /* ===== Animations ===== */
-    @keyframes cardIn{
-      to{ opacity:1; transform: translateY(0) scale(1); }
-    }
-    @keyframes float{
-      0%,100%{ transform:translateY(0) }
-      50%{ transform:translateY(-8px) }
-    }
-    @keyframes sheen{
-      0%{ transform:translateX(-120%) rotate(0.001deg) }
-      100%{ transform:translateX(120%) rotate(0.001deg) }
-    }
-    @keyframes fadeUp{
-      from{ opacity:0; transform:translateY(10px) }
-      to{ opacity:1; transform:translateY(0) }
-    }
-    @keyframes pulse{
-      0%,100%{ box-shadow:0 4px 14px rgba(0,0,0,.25) }
-      50%{ box-shadow:0 6px 22px rgba(0,0,0,.35) }
-    }
-    @keyframes bgShift{
-      0%{ background-position: 0% 0%, 0% 0% }
-      100%{ background-position: 5% 3%, 100% 100% }
-    }
-    @keyframes blob{
-      0%{ transform:translate(-20%, -30%) scale(1) }
-      100%{ transform:translate(-10%, -35%) scale(1.05) }
-    }
-    @keyframes blob2{
-      0%{ transform:translate(15%, 15%) scale(1) }
-      100%{ transform:translate(10%, 18%) scale(1.06) }
-    }
-
-    /* Respect users who prefer reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      *{ animation:none !important; transition:none !important }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="card" role="main" aria-label="Talia website status">
-    <div class="logo-wrap">
-      <!-- Keep the file as talia-logo.png or adjust the src -->
-      <img class="logo" src="talia-logo.png" alt="Talia logo">
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <!-- TALIA wordmark (SVG) -->
+        <svg class="wordmark" viewBox="0 0 110 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="TALIA">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="110" y2="20" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#dfe4ff"/><stop offset="1" stop-color="#ffffff"/>
+            </linearGradient>
+          </defs>
+          <text x="0" y="15" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto" font-size="16" font-weight="800" fill="url(#g1)" letter-spacing=".5">TALIA</text>
+        </svg>
+        <span class="chip">AI Telehealth</span>
+      </div>
+      <a class="btn pill" href="#contact">Request Demo</a>
     </div>
+  </header>
 
-    <h1>We’re building something caring and clever.</h1>
-    <p>Our new Talia website is currently being built. Check back soon for a smoother, smarter way to connect with care.</p>
-    <div class="pill" aria-live="polite">Coming soon</div>
+  <section class="hero">
+    <div class="glow"></div>
+    <div class="container center">
+      <h1>Healthcare reimagined with <span class="highlight">TALIA</span></h1>
+      <p>The future of AI-powered telehealth. Connecting patients with qualified doctors through intelligent matching, secure consultations, and streamlined healthcare delivery.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#how">Watch Demo</a>
+        <a class="btn" href="#contact">Schedule Pitch →</a>
+      </div>
 
-    <footer>powered by talia</footer>
-  </main>
+      <!-- Feature tiles -->
+      <div class="tiles">
+        <div class="tile">
+          <h3>AI First</h3>
+          <p>Intelligent healthcare matching for faster, safer triage.</p>
+        </div>
+        <div class="tile">
+          <h3>Vision</h3>
+          <p>Accessible, equitable care for everyone, anywhere.</p>
+        </div>
+        <div class="tile">
+          <h3>Future</h3>
+          <p>Next-gen telehealth platform with privacy by design.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="container center">
+      <h2>Simple process, powerful results</h2>
+      <p class="muted">From symptoms to treatment in three easy steps</p>
+
+      <div class="steps">
+        <div class="step">
+          <!-- TALIA badge #1 -->
+          <svg class="badge" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Step 1">
+            <defs>
+              <radialGradient id="bg1" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#0b102a"/><stop offset="1" stop-color="#2b2f86"/></radialGradient>
+            </defs>
+            <circle cx="100" cy="100" r="80" fill="url(#bg1)"/>
+            <text x="100" y="86" text-anchor="middle" font-family="Inter, system-ui" font-size="26" font-weight="800" fill="#cfd6ff" letter-spacing="2">TALIA</text>
+            <text x="100" y="130" text-anchor="middle" font-family="Inter, system-ui" font-size="52" font-weight="800" fill="#6973ff">1</text>
+          </svg>
+          <h4>Describe Symptoms</h4>
+          <p>AI analyzes your symptoms and matches you with the right specialist.</p>
+        </div>
+
+        <div class="step">
+          <!-- badge #2 -->
+          <svg class="badge" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Step 2">
+            <defs><radialGradient id="bg2" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#0b102a"/><stop offset="1" stop-color="#2b2f86"/></radialGradient></defs>
+            <circle cx="100" cy="100" r="80" fill="url(#bg2)"/>
+            <text x="100" y="86" text-anchor="middle" font-family="Inter, system-ui" font-size="26" font-weight="800" fill="#cfd6ff" letter-spacing="2">TALIA</text>
+            <text x="100" y="130" text-anchor="middle" font-family="Inter, system-ui" font-size="52" font-weight="800" fill="#6973ff">2</text>
+          </svg>
+          <h4>Video Consultation</h4>
+          <p>Secure video call with qualified doctors within minutes.</p>
+        </div>
+
+        <div class="step">
+          <!-- badge #3 -->
+          <svg class="badge" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Step 3">
+            <defs><radialGradient id="bg3" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#0b102a"/><stop offset="1" stop-color="#2b2f86"/></radialGradient></defs>
+            <circle cx="100" cy="100" r="80" fill="url(#bg3)"/>
+            <text x="100" y="86" text-anchor="middle" font-family="Inter, system-ui" font-size="26" font-weight="800" fill="#cfd6ff" letter-spacing="2">TALIA</text>
+            <text x="100" y="130" text-anchor="middle" font-family="Inter, system-ui" font-size="52" font-weight="800" fill="#6973ff">3</text>
+          </svg>
+          <h4>Get Treatment</h4>
+          <p>Receive prescriptions and follow-up care instantly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="market">
+    <div class="container center">
+      <h2>Market opportunity with <span class="highlight">TALIA</span></h2>
+      <p class="muted">Disrupting a $350B global telehealth market</p>
+
+      <div class="stats">
+        <div class="stat"><div class="n">$350B</div><div class="l">Global telehealth market</div></div>
+        <div class="stat"><div class="n">40%</div><div class="l">Annual growth rate</div></div>
+        <div class="stat"><div class="n">85%</div><div class="l">Cost reduction vs traditional</div></div>
+        <div class="stat"><div class="n">1M+</div><div class="l">Potential users year 1</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="cta" id="contact">
+      <h3>Ready to revolutionize healthcare?</h3>
+      <p>Join us in building the future of telehealth with <strong>TALIA</strong>.</p>
+      <div class="cta-row" style="justify-content:center">
+        <a class="btn btn-primary" href="mailto:hello@taliaonline.co.uk">Request Investment Deck</a>
+        <a class="btn" href="mailto:hello@taliaonline.co.uk">Schedule Meeting →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container center">
+      <div class="fbrand">TALIA</div>
+      <div class="fine">AI-powered telehealth for the modern world</div>
+      <div class="fine" style="margin-top:8px">© 2024 Talia AI · Privacy Policy · Terms of Service · Contact</div>
+      <div class="fine" style="margin-top:6px; opacity:.75">powered by talia</div>
+    </div>
+  </footer>
 </body>
 </html>
