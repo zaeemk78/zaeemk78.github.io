@@ -19,9 +19,8 @@
           </defs>
           <text x="0" y="15" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto" font-size="16" font-weight="800" fill="url(#g1)" letter-spacing=".5">TALIA</text>
         </svg>
-        <span class="chip">AI Telehealth</span>
       </div>
-      <a class="btn pill" href="#contact">Request Demo</a>
+      <a class="btn pill" href="#" id="contactBtn">Contact Us</a>
     </div>
   </header>
 
@@ -60,11 +59,8 @@
 
       <div class="steps">
         <div class="step">
-          <!-- TALIA badge #1 -->
           <svg class="badge" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Step 1">
-            <defs>
-              <radialGradient id="bg1" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#0b102a"/><stop offset="1" stop-color="#2b2f86"/></radialGradient>
-            </defs>
+            <defs><radialGradient id="bg1" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#0b102a"/><stop offset="1" stop-color="#2b2f86"/></radialGradient></defs>
             <circle cx="100" cy="100" r="80" fill="url(#bg1)"/>
             <text x="100" y="86" text-anchor="middle" font-family="Inter, system-ui" font-size="26" font-weight="800" fill="#cfd6ff" letter-spacing="2">TALIA</text>
             <text x="100" y="130" text-anchor="middle" font-family="Inter, system-ui" font-size="52" font-weight="800" fill="#6973ff">1</text>
@@ -74,7 +70,6 @@
         </div>
 
         <div class="step">
-          <!-- badge #2 -->
           <svg class="badge" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Step 2">
             <defs><radialGradient id="bg2" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#0b102a"/><stop offset="1" stop-color="#2b2f86"/></radialGradient></defs>
             <circle cx="100" cy="100" r="80" fill="url(#bg2)"/>
@@ -86,7 +81,6 @@
         </div>
 
         <div class="step">
-          <!-- badge #3 -->
           <svg class="badge" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Step 3">
             <defs><radialGradient id="bg3" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#0b102a"/><stop offset="1" stop-color="#2b2f86"/></radialGradient></defs>
             <circle cx="100" cy="100" r="80" fill="url(#bg3)"/>
@@ -133,5 +127,65 @@
       <div class="fine" style="margin-top:6px; opacity:.75">powered by talia</div>
     </div>
   </footer>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="contactTitle">
+    <div class="modal-content" role="document">
+      <button class="close" type="button" aria-label="Close modal">×</button>
+      <h2 id="contactTitle">Contact Us</h2>
+      <form id="contactForm">
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" name="fname" autocomplete="given-name" required>
+
+        <label for="lname">Surname</label>
+        <input type="text" id="lname" name="lname" autocomplete="family-name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" autocomplete="email" required>
+
+        <button type="submit" class="btn btn-primary" style="width:100%">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Modal controls with animation & a11y niceties
+    const modal = document.getElementById("contactModal");
+    const btn = document.getElementById("contactBtn");
+    const closeBtn = modal.querySelector(".close");
+    const firstField = document.getElementById("fname");
+
+    function openModal(e) {
+      if (e) e.preventDefault();
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      // focus first field after animation kick
+      setTimeout(() => firstField.focus(), 150);
+      document.body.style.overflow = "hidden"; // prevent background scroll
+    }
+
+    function closeModal() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      btn.focus();
+    }
+
+    btn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("open")) closeModal();
+    });
+
+    // Simple submit handler (replace with real endpoint later)
+    document.getElementById("contactForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Thank you! We’ll be in touch soon.");
+      closeModal();
+    });
+  </script>
 </body>
 </html>
