@@ -1,195 +1,512 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>TALIA — AI Telehealth</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Encouraging You Youth Club – Website Coming Soon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --blue: #1c3f94;
+      --blue-soft: #2c4fa3;
+      --green: #8cc63f;
+      --orange: #f7941d;
+      --pink: #ec008c;
+      --teal: #00aeef;
+      --bg: #f3f7ff;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #6b7280;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.12);
+      --border-subtle: rgba(148, 163, 184, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(0,174,239,0.15), transparent 55%),
+        radial-gradient(circle at 90% 10%, rgba(236,0,140,0.12), transparent 60%),
+        radial-gradient(circle at 10% 90%, rgba(140,198,63,0.12), transparent 60%),
+        var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 24px 16px 32px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1080px;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 16px 8px 32px;
+    }
+
+    .logo-card {
+      margin: 0 auto 24px;
+      width: 210px;
+      height: 210px;
+      background: radial-gradient(circle at 50% 0, rgba(0,174,239,0.16), transparent 65%),
+                  #ffffff;
+      border-radius: 28px;
+      box-shadow:
+        0 18px 55px rgba(37, 99, 235, 0.22),
+        0 0 0 1px rgba(148,163,184,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .logo-card img {
+      max-width: 90%;
+      height: auto;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 4vw, 2.7rem);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .coming-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      border-radius: 999px;
+      padding: 14px 24px;
+      border: 1px solid rgba(129, 140, 248, 0.4);
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 12px 30px rgba(148, 163, 184, 0.25);
+      margin-bottom: 10px;
+    }
+
+    .coming-badge span:first-child {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    .coming-badge span:last-child {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .hero-note {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* SECTIONS WRAPPER */
+    .sections {
+      margin-top: 32px;
+      display: grid;
+      gap: 22px;
+    }
+
+    /* SESSION CARDS */
+    .sessions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 22px 20px 18px;
+      text-align: left;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      background: rgba(0,174,239,0.1);
+      color: var(--blue);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .card-title.youth { color: var(--teal); }
+    .card-title.cv { color: var(--orange); }
+
+    .card-body {
+      margin-top: 6px;
+      font-size: 0.93rem;
+    }
+
+    .session-meta {
+      margin: 10px 0 8px;
+      display: grid;
+      gap: 2px;
+      font-size: 0.9rem;
+    }
+
+    .session-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-main);
+    }
+
+    .session-meta .label {
+      color: var(--text-muted);
+      font-size: 0.86rem;
+    }
+
+    .session-pill {
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: var(--radius-md);
+      background: rgba(0,174,239,0.04);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .card.cv .card-icon {
+      background: rgba(247,148,29,0.1);
+      color: var(--orange);
+    }
+
+    .card.cv .session-pill {
+      background: rgba(247,148,29,0.05);
+    }
+
+    /* BENEFITS CARDS */
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .benefit-card {
+      background: rgba(255,255,255,0.96);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(148,163,184,0.24);
+      padding: 16px 14px 14px;
+      text-align: left;
+    }
+
+    .benefit-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .benefit-title {
+      font-size: 0.98rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .benefit-text {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .benefit-1 .benefit-icon {
+      background: rgba(0,174,239,0.08);
+      color: var(--teal);
+    }
+    .benefit-1 .benefit-title { color: var(--teal); }
+
+    .benefit-2 .benefit-icon {
+      background: rgba(236,0,140,0.08);
+      color: var(--pink);
+    }
+    .benefit-2 .benefit-title { color: var(--pink); }
+
+    .benefit-3 .benefit-icon {
+      background: rgba(140,198,63,0.1);
+      color: var(--green);
+    }
+    .benefit-3 .benefit-title { color: var(--green); }
+
+    /* CONTACT / SOCIAL */
+    .contact-card {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 24px 20px 18px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, rgba(140,198,63,0.09), rgba(0,174,239,0.12));
+      border: 1px solid rgba(148,163,184,0.25);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .contact-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      background: rgba(34,197,94,0.12);
+      color: #16a34a;
+      font-size: 1.5rem;
+    }
+
+    .contact-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .contact-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .contact-card a.email {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--blue-soft);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid rgba(59,130,246,0.25);
+    }
+
+    .social-row {
+      border-top: 1px solid rgba(148,163,184,0.3);
+      margin-top: 14px;
+      padding-top: 12px;
+    }
+
+    .social-label {
+      font-size: 0.86rem;
+      margin-bottom: 6px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid rgba(236,0,140,0.3);
+      color: var(--pink);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .social-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 30% 0, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+      color: #ffffff;
+      font-size: 1.1rem;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 860px) {
+      .sessions {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .benefits {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 20px 12px 28px;
+      }
+      .benefits {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .logo-card {
+        width: 180px;
+        height: 180px;
+      }
+      .card {
+        padding: 18px 16px 14px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="container nav">
-      <div class="brand">
-        <!-- TALIA wordmark (SVG) -->
-        <svg class="wordmark" viewBox="0 0 110 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="TALIA">
-          <defs>
-            <linearGradient id="g1" x1="0" y1="0" x2="110" y2="20" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#dfe4ff"/><stop offset="1" stop-color="#ffffff"/>
-            </linearGradient>
-          </defs>
-          <text x="0" y="15" font-family="Inter, system-ui, -apple-system, Segoe UI, Roboto" font-size="16" font-weight="800" fill="url(#g1)" letter-spacing=".5">TALIA</text>
-        </svg>
+  <div class="page">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="logo-card">
+        <!-- Replace src with your actual logo filename if different -->
+        <img src="IVSC9484.JPG" alt="Encouraging You logo">
       </div>
-      <a class="btn pill" href="#" id="contactBtn">Contact Us</a>
-    </div>
-  </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="glow"></div>
-    <div class="container center">
-      <h1>Healthcare reimagined with <span class="highlight">TALIA</span></h1>
-      <p class="hero-subtext">
-        The future of AI‑powered telehealth. Connecting patients with qualified doctors
-        through intelligent matching, secure consultations, and streamlined healthcare delivery.
+      <h1 class="hero-title">Encouraging You</h1>
+      <p class="hero-subtitle">Youth Club in Rochdale</p>
+
+      <div class="coming-badge">
+        <span>Website Coming Soon</span>
+        <span>We’re building something fresh and exciting for you.</span>
+      </div>
+
+      <p class="hero-note">
+        For now, come and join us in person every Saturday – everyone is welcome.
       </p>
-      <div class="cta-row hero-cta">
-        <a class="btn btn-primary" href="#how">Watch Demo</a>
-        <a class="btn" href="#contact">Schedule Pitch →</a>
-      </div>
+    </section>
 
-      <!-- Feature tiles -->
-      <div class="tiles">
-        <div class="tile">
-          <h3>AI First</h3>
-          <p>Intelligent healthcare matching for faster, safer triage.</p>
+    <!-- MAIN SECTIONS -->
+    <div class="sections">
+      <!-- Session cards -->
+      <section class="sessions">
+        <article class="card">
+          <div class="card-header">
+            <div class="card-icon">📅</div>
+            <div class="card-title youth">Youth Club Sessions</div>
+          </div>
+          <div class="card-body">
+            <div class="session-meta">
+              <span class="label">When</span>
+              <span>Every Saturday</span>
+              <span class="label">Time</span>
+              <span>6:45 PM – 8:45 PM</span>
+            </div>
+            <div class="session-pill">
+              Join us for games, activities, chill time and building real friendships in a safe, positive space.
+            </div>
+          </div>
+        </article>
+
+        <article class="card cv">
+          <div class="card-header">
+            <div class="card-icon">💼</div>
+            <div class="card-title cv">CV Sessions</div>
+          </div>
+          <div class="card-body">
+            <div class="session-meta">
+              <span class="label">When</span>
+              <span>Every Saturday</span>
+              <span class="label">Time</span>
+              <span>4:45 PM – 6:45 PM</span>
+            </div>
+            <div class="session-pill">
+              Get one-to-one help with your CV, job applications and career goals before youth club starts.
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- Benefits -->
+      <section class="benefits">
+        <article class="benefit-card benefit-1">
+          <div class="benefit-icon">👥</div>
+          <div class="benefit-title">Community & Friendship</div>
+          <p class="benefit-text">
+            Meet new people, feel supported and be part of a friendly youth community.
+          </p>
+        </article>
+
+        <article class="benefit-card benefit-2">
+          <div class="benefit-icon">❤️</div>
+          <div class="benefit-title">Personal Growth</div>
+          <p class="benefit-text">
+            Build confidence, try new things and discover what you’re good at in a fun way.
+          </p>
+        </article>
+
+        <article class="benefit-card benefit-3">
+          <div class="benefit-icon">🏆</div>
+          <div class="benefit-title">Career Support</div>
+          <p class="benefit-text">
+            Learn how to present yourself, prepare for work or college and plan your next steps.
+          </p>
+        </article>
+      </section>
+
+      <!-- Contact -->
+      <section class="contact-card">
+        <div class="contact-icon-wrap">✉️</div>
+        <div class="contact-title">Get In Touch</div>
+        <p class="contact-text">
+          Any enquiries about Encouraging You Youth Club or our CV sessions?
+        </p>
+
+        <a class="email" href="mailto:admin@encouragingyou.co.uk">
+          admin@encouragingyou.co.uk
+        </a>
+
+        <div class="social-row">
+          <div class="social-label">Follow us on social media</div>
+          <a class="social-link"
+             href="https://www.instagram.com/encouragingyou1/?g=5"
+             target="_blank"
+             rel="noopener">
+            <span class="social-avatar">📷</span>
+            <span>@encouragingyou1</span>
+          </a>
         </div>
-        <div class="tile">
-          <h3>Vision</h3>
-          <p>Accessible, equitable care for everyone, anywhere.</p>
-        </div>
-        <div class="tile">
-          <h3>Future</h3>
-          <p>Next‑gen telehealth platform with privacy by design.</p>
-        </div>
-      </div>
+      </section>
     </div>
-  </section>
 
-  <!-- How it works -->
-  <section id="how">
-    <div class="container center">
-      <h2>Simple process, powerful results</h2>
-      <p class="muted">From symptoms to treatment in three easy steps</p>
-
-      <div class="steps">
-        <div class="step">
-          <svg class="badge" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Step 1">
-            <defs><radialGradient id="bg1" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#0b102a"/><stop offset="1" stop-color="#2b2f86"/></radialGradient></defs>
-            <circle cx="100" cy="100" r="80" fill="url(#bg1)"/>
-            <text x="100" y="86" text-anchor="middle" font-family="Inter, system-ui" font-size="26" font-weight="800" fill="#cfd6ff" letter-spacing="2">TALIA</text>
-            <text x="100" y="130" text-anchor="middle" font-family="Inter, system-ui" font-size="52" font-weight="800" fill="#6973ff">1</text>
-          </svg>
-          <h4>Describe Symptoms</h4>
-          <p>AI analyzes your symptoms and matches you with the right specialist.</p>
-        </div>
-
-        <div class="step">
-          <svg class="badge" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Step 2">
-            <defs><radialGradient id="bg2" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#0b102a"/><stop offset="1" stop-color="#2b2f86"/></radialGradient></defs>
-            <circle cx="100" cy="100" r="80" fill="url(#bg2)"/>
-            <text x="100" y="86" text-anchor="middle" font-family="Inter, system-ui" font-size="26" font-weight="800" fill="#cfd6ff" letter-spacing="2">TALIA</text>
-            <text x="100" y="130" text-anchor="middle" font-family="Inter, system-ui" font-size="52" font-weight="800" fill="#6973ff">2</text>
-          </svg>
-          <h4>Video Consultation</h4>
-          <p>Secure video call with qualified doctors within minutes.</p>
-        </div>
-
-        <div class="step">
-          <svg class="badge" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="Step 3">
-            <defs><radialGradient id="bg3" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#0b102a"/><stop offset="1" stop-color="#2b2f86"/></radialGradient></defs>
-            <circle cx="100" cy="100" r="80" fill="url(#bg3)"/>
-            <text x="100" y="86" text-anchor="middle" font-family="Inter, system-ui" font-size="26" font-weight="800" fill="#cfd6ff" letter-spacing="2">TALIA</text>
-            <text x="100" y="130" text-anchor="middle" font-family="Inter, system-ui" font-size="52" font-weight="800" fill="#6973ff">3</text>
-          </svg>
-          <h4>Get Treatment</h4>
-          <p>Receive prescriptions and follow‑up care instantly.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Market -->
-  <section id="market">
-    <div class="container center">
-      <h2>Market opportunity with <span class="highlight">TALIA</span></h2>
-      <p class="muted">Disrupting a $350B global telehealth market</p>
-
-      <div class="stats">
-        <div class="stat"><div class="n">$350B</div><div class="l">Global telehealth market</div></div>
-        <div class="stat"><div class="n">40%</div><div class="l">Annual growth rate</div></div>
-        <div class="stat"><div class="n">85%</div><div class="l">Cost reduction vs traditional</div></div>
-        <div class="stat"><div class="n">1M+</div><div class="l">Potential users year 1</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="container">
-    <div class="cta" id="contact">
-      <h3>Ready to revolutionize healthcare?</h3>
-      <p>Join us in building the future of telehealth with <strong>TALIA</strong>.</p>
-      <div class="cta-row" style="justify-content:center">
-        <a class="btn btn-primary" href="mailto:hello@taliaonline.co.uk">Request Investment Deck</a>
-        <a class="btn" href="mailto:hello@taliaonline.co.uk">Schedule Meeting →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container center">
-      <div class="fbrand">TALIA</div>
-      <div class="fine">AI‑powered telehealth for the modern world</div>
-      <div class="fine" style="margin-top:8px">© 2024 Talia AI · Privacy Policy · Terms of Service · Contact</div>
-      <div class="fine" style="margin-top:6px; opacity:.75">powered by talia</div>
-    </div>
-  </footer>
-
-  <!-- Contact Modal -->
-  <div id="contactModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="contactTitle">
-    <div class="modal-content" role="document">
-      <button class="close" type="button" aria-label="Close modal">×</button>
-      <h2 id="contactTitle">Contact Us</h2>
-      <form id="contactForm">
-        <label for="fname">First Name</label>
-        <input type="text" id="fname" name="fname" autocomplete="given-name" required>
-
-        <label for="lname">Surname</label>
-        <input type="text" id="lname" name="lname" autocomplete="family-name" required>
-
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" autocomplete="email" required>
-
-        <button type="submit" class="btn btn-primary" style="width:100%">Submit</button>
-      </form>
-    </div>
+    <!-- Footer -->
+    <footer>
+      © 2025 Encouraging You . All rights reserved.
+    </footer>
   </div>
-
-  <!-- Scripts -->
-  <script>
-    // Modal controls with animation & a11y
-    const modal = document.getElementById("contactModal");
-    const btn = document.getElementById("contactBtn");
-    const closeBtn = modal.querySelector(".close");
-    const firstField = document.getElementById("fname");
-
-    function openModal(e) {
-      if (e) e.preventDefault();
-      modal.classList.add("open");
-      modal.setAttribute("aria-hidden", "false");
-      setTimeout(() => firstField.focus(), 150);
-      document.body.style.overflow = "hidden";
-    }
-    function closeModal() {
-      modal.classList.remove("open");
-      modal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      btn.focus();
-    }
-
-    btn.addEventListener("click", openModal);
-    closeBtn.addEventListener("click", closeModal);
-    window.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
-    window.addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains("open")) closeModal(); });
-
-    // Fake submit (replace with your backend later)
-    document.getElementById("contactForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert("Thank you! We’ll be in touch soon.");
-      closeModal();
-    });
-  </script>
 </body>
 </html>
